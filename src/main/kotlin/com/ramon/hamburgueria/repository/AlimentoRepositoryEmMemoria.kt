@@ -2,6 +2,7 @@ package com.ramon.hamburgueria.repository
 
 import com.ramon.hamburgueria.controller.dto.AlimentoDto
 import com.ramon.hamburgueria.domain.Alimento
+import com.ramon.hamburgueria.exception.ElementoNaoEncontradoException
 import org.springframework.stereotype.Component
 
 @Component
@@ -25,11 +26,21 @@ class AlimentoRepositoryEmMemoria() : AlimentoRepository {
     }
 
     override fun findByNome(pesquisa: String): Alimento {
-        return alimentoLista.first{it.nome == pesquisa}
+        try{
+            return alimentoLista.first{it.nome == pesquisa}
+        }catch (exception: NoSuchElementException){
+            throw  RuntimeException("não foi possivel pesquisar por nome $pesquisa")
+        }
+
     }
 
     override fun findById(id: Long): Alimento {
-        return alimentoLista.first{it.id == id}
+        try{
+            return alimentoLista.first{it.id == id}
+        }catch (exception: NoSuchElementException){
+            throw  ElementoNaoEncontradoException("não foi possivel pesquisar por id $id")
+        }
+
     }
 
     override fun delete(id: Long) {
