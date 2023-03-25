@@ -52,10 +52,10 @@ class AlimentoRepositoryEmMemoria() : AlimentoRepository {
        alimentoLista.forEachIndexed { index, alimento ->
            if(alimento.id == id){
                alimentoLista[index] = alimento.copy(
-                   nome = alimentoDto.nome,
-                   descricao = alimentoDto.descricao,
-                   preco = alimentoDto.preco,
-                   categoria = alimentoDto.categoria)
+                   nome = alimentoDto.nome!!,
+                   descricao = alimentoDto.descricao!!,
+                   preco = alimentoDto.preco!!,
+                   categoria = alimentoDto.categoria!!)
                alimentoAtualizado = alimentoLista[index]
            }
        }
