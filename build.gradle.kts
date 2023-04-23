@@ -23,6 +23,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.0.4")
 	implementation("com.h2database:h2:2.1.214")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.5")
+	implementation("org.flywaydb:flyway-maven-plugin:9.16.1")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

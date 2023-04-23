@@ -17,7 +17,6 @@ class AlimentoDto(
     @field:Size(max = 20, message = "a categoria deve ter menos que 20 caracteres")
     val categoria: String? = null
 ) {
-
     fun paraDominio(): Alimento {
         return Alimento(
             id = null,
