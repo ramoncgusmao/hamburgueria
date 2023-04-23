@@ -2,14 +2,12 @@ package com.ramon.hamburgueria.repository
 
 import com.ramon.hamburgueria.controller.dto.AlimentoDto
 import com.ramon.hamburgueria.domain.Alimento
+import com.ramon.hamburgueria.repository.model.AlimentoEntity
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface AlimentoRepository {
+interface AlimentoRepository: JpaRepository<AlimentoEntity, Long> {
 
-    fun save(alimento: Alimento): Alimento
 
-    fun findAll(): List<Alimento>
-    fun findByNome(pesquisa: String): Alimento
-    fun findById(id: Long): Alimento
-    fun delete(id: Long)
-    fun update(id: Long, alimentoDto: AlimentoDto): Alimento?
+    fun findByNome(pesquisa: String): AlimentoEntity
+
 }

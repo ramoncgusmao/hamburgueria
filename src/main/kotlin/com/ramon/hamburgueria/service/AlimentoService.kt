@@ -3,6 +3,7 @@ package com.ramon.hamburgueria.service
 import com.ramon.hamburgueria.controller.dto.AlimentoDto
 import com.ramon.hamburgueria.domain.Alimento
 import com.ramon.hamburgueria.repository.AlimentoRepository
+import com.ramon.hamburgueria.repository.model.AlimentoEntity
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,28 +12,31 @@ class AlimentoService(
 ) {
 
     fun salvar(alimentoDto: AlimentoDto): Alimento {
-        return  alimentoRepository.save(alimentoDto.paraDominio())
+        val alimento = alimentoDto.paraDominio()
+        return  alimentoRepository.save(AlimentoEntity.doDominio(alimento)).paraDominio()
     }
 
     fun buscarTodos(): List<Alimento> {
-        return alimentoRepository.findAll()
+        return alimentoRepository.findAll().map { it.paraDominio() }
     }
 
     fun buscarComFiltro(pesquisa: String): Alimento {
         val id = pesquisa.toLongOrNull()
-        if(id == null){
-            return alimentoRepository.findByNome(pesquisa)
+        val alimentoEntity = if(id == null){
+             alimentoRepository.findByNome(pesquisa)
         }else{
-            return alimentoRepository.findById(id)
+             alimentoRepository.findById(id).orElseThrow()
         }
+        return alimentoEntity.paraDominio()
     }
 
     fun deletar(id: Long) {
-        alimentoRepository.delete(id)
+        alimentoRepository.deleteById(id)
     }
 
     fun atualizar(id: Long, alimentoDto: AlimentoDto): Alimento? {
-        return alimentoRepository.update(id, alimentoDto)
+        val alimento = alimentoDto.paraDominio().copy(id = id)
+        return alimentoRepository.save(AlimentoEntity.doDominio(alimento)).paraDominio()
     }
 
 }
